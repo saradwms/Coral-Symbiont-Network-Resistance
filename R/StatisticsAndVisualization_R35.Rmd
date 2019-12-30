@@ -9,11 +9,14 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(fig.width=12, fig.height=8) 
 #load packages needed
+library(plyr)
 library(tidyverse)
 library(ggpubr)
 library(vegan)
 library(coin)
-
+library(extrafont)
+font_import()
+fonts()
 ```
 #### Note on this code:
 R version 3.5.1 (2018-07-02)
@@ -27,11 +30,13 @@ Code written by Sara D. Williams
 The following code chunk is used to make Figure 3.
 
 ```{r}
+
 bleachmodel<-read.csv("Resistance.csv", header=T) #compiled results for Resistance from Bleaching model, see Metadata 2 for more information.
 summary(bleachmodel)
-theme_set(theme_grey(base_size = 28)) 
+#theme_set(theme_grey(base_size = 18))
 #reorder simulations
 bleachmodel$Simulation<-factor(bleachmodel$Simulation,levels=c("Network","Shuffled Tolerances","Random Tolerances","Random Bipartite Degree Conserved","Random Bipartite Not-Degree Conserved"))
+bleachmodel$Simulation<-revalue(bleachmodel$Simulation, c("Network"="Natural","Shuffled Tolerances"="Shuffled tolerances","Random Tolerances"="Random tolerances","Random Bipartite Degree Conserved"="Random bipartite dc","Random Bipartite Not-Degree Conserved"="Random bipartite ndc"))
 
 #plot the global and ocean-basins
 Main_oceans<-bleachmodel %>%
@@ -43,17 +48,16 @@ main<-ggplot( Main_oceans, aes(x=as.factor(Spatial.Scale), y=R,fill=Simulation))
   geom_errorbar(aes(ymin=R-R_std, ymax=R+R_std), width=.2,position=position_dodge(.9))+
   scale_fill_brewer(palette="BuGn")+
   coord_cartesian(ylim=c(0,1))+
+  theme(text = element_text(family = "Times New Roman"))+
   theme(panel.background = element_blank())+ 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  xlab("Global and Oceans")+
+  xlab("Global and oceans")+
   ylab("Resistance")+
   #labs(x="Global and Oceans",y="Resistance",size=10)+
-  geom_text(aes( label=statlab,y=R+R_std+0.1),position = position_dodge(1),vjust =0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  geom_text(aes( label=statlab,y=R+R_std+0.1),position = position_dodge(1),vjust =0,size=2)+theme(axis.title.x = element_text(size = 8),axis.text.x = element_text(size = 6),axis.title.y = element_text(size = 8),axis.text.y=element_text(size=6))+
+  theme(legend.position="bottom",legend.text=element_text(size=6),legend.title=element_blank())
+
 
 #caribbean subregions
 carib<-bleachmodel %>%
@@ -62,15 +66,12 @@ c<-ggplot( carib, aes(x=as.factor(Spatial.Scale), y=R, fill=Simulation)) +
   geom_bar(position=position_dodge(), stat="identity",colour='black') +
   geom_errorbar(aes(ymin=R-R_std, ymax=R+R_std), width=.2,position=position_dodge(.9))+
   scale_fill_brewer(palette="BuGn")+coord_cartesian(ylim=c(0,1))+
+  theme(text = element_text(family = "Times New Roman"))+
   theme(panel.background = element_blank())+ 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  labs(x="Caribbean Regions",y=" ")+
-  geom_text(aes( label=statlab,y=R+R_std+0.1),position = position_dodge(1),vjust = 0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  labs(x="Caribbean sea regions",y=" ")+
+  geom_text(aes( label=statlab,y=R+R_std+0.1),position = position_dodge(1),vjust = 0,size=2)+theme(axis.title.x = element_text(size = 8),axis.text.x = element_text(size = 6),axis.title.y = element_text(size = 8),axis.text.y=element_text(size=6))
 
 #Pacific subregions
 pac<-bleachmodel %>%
@@ -79,15 +80,12 @@ p<-ggplot( pac, aes(x=as.factor(Spatial.Scale), y=R, fill=Simulation)) +
   geom_bar(position=position_dodge(), stat="identity", colour='black') +
   geom_errorbar(aes(ymin=R-R_std, ymax=R+R_std), width=.2,position=position_dodge(.9))+
   scale_fill_brewer(palette="BuGn")+coord_cartesian(ylim=c(0,1))+
+  theme(text = element_text(family = "Times New Roman"))+
   theme(panel.background = element_blank())+ 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  labs(x="Pacific Regions",y=" ")+
-  geom_text(aes( label=statlab,y=R+R_std+0.1),position = position_dodge(1),vjust=0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  labs(x="Pacific ocean regions",y=" ")+
+  geom_text(aes( label=statlab,y=R+R_std+0.1),position = position_dodge(1),vjust=0,size=2)+theme(axis.title.x = element_text(size = 8),axis.text.x = element_text(size = 6),axis.title.y = element_text(size = 8),axis.text.y=element_text(size=6))
 
 #Indian subregions
 ind<-bleachmodel %>%
@@ -95,24 +93,19 @@ ind<-bleachmodel %>%
 i<-ggplot( ind, aes(x=as.factor(Spatial.Scale), y=R, fill=Simulation)) +
   geom_bar(position=position_dodge(), stat="identity", colour='black') +
   geom_errorbar(aes(ymin=R-R_std, ymax=R+R_std), width=.2,position=position_dodge(.9))+
-  scale_fill_brewer(palette="BuGn")+coord_cartesian(ylim=c(0,1))+theme(panel.background = element_blank())+ 
+  scale_fill_brewer(palette="BuGn")+coord_cartesian(ylim=c(0,1))+
+  theme(text = element_text(family = "Times New Roman"))+theme(panel.background = element_blank())+ 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  labs(x="Indian Regions",y="Resistance")+
-  geom_text(aes( label=statlab,y=R+R_std+0.1),position = position_dodge(1),vjust = 0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
-
-
+  labs(x="Indian ocean regions",y="Resistance")+
+  geom_text(aes( label=statlab,y=R+R_std+0.1),position = position_dodge(1),vjust = 0,size=2)+theme(axis.title.x = element_text(size = 8),axis.text.x = element_text(size = 6),axis.title.y = element_text(size = 8),axis.text.y=element_text(size=6))
 ```
 
 
 ```{r}
 #Put them all in one plot
-ggarrange(main, p, i, c, ncol=2, nrow=2, common.legend = TRUE, legend="bottom")
-ggsave("figure3.jpg", plot = last_plot(), device = NULL, path = NULL,scale = 1, width = NA, height = NA, units = c("in"),dpi = 600)
+ggarrange(main, p, i, c, ncol=2, nrow=2, labels=c("a","b","c","d"), font.label=list(size = 8, face = "plain",family="Times New Roman"),common.legend = TRUE, legend="bottom")
+#ggsave("figure3_v56.jpg", plot = last_plot(), device = NULL, path = NULL,scale = 1, width = 6, height = 5, units = c("in"),dpi = 600)
 ```
 
 
@@ -138,16 +131,12 @@ g_total<-global+
   scale_fill_manual(values=c("links" = "#7fc97f", "both" = "#99d8c9", "hosts" = "#a6cee3","symbionts"="#ffff99"), drop = FALSE)+
   #ylim(0,1)+
   scale_y_continuous(limits=c(0,1.05),expand = c(0,0),breaks=seq(0, 1, 0.1))+
-  theme(panel.background = element_blank())+ 
+  theme(panel.background = element_blank())+ theme(text = element_text(family = "Times New Roman"))+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   labs(x="",y="Robustness, R50")+
   theme(legend.position="none",axis.text.x = element_text(angle = 70, hjust = 1))+
   scale_x_discrete(limits=c("Random_link","bleach","LT_BL","LT_HL","LT_SL","Random_node","Tolerance_low","Degree_low","Degree_high"),labels=c("Random_link"="Random","bleach"="Bleaching","Tolerance_low"="Susceptible","Tolerance_high"="High Tolerance","Degree_high"= "High Degree","Degree_low"="Low Degree","Random_node"="Random Node","LT_BH"="High Avg. Link Tolerance","LT_BL"="Susceptible","LT_HH"="High Host Link Tolerance","LT_HL"="Host Susceptible","LT_SH"="High Symbiont Link Tolerance","LT_SL"="Symbiont Susceptible"))+
-  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=1)+theme(axis.title.x = element_text(size = 6),axis.text.x = element_text(size = 4),axis.title.y = element_text(size = 6),axis.text.y=element_text(size=4))
 
 Pacific_tot<-data2%>%
   filter(network=="P",removed!="hosts",removed!="symbionts",R50_who=="both")
@@ -160,16 +149,12 @@ p_total<-Pacific+
   scale_fill_manual(values=c("links" = "#7fc97f", "both" = "#99d8c9", "hosts" = "#a6cee3","symbionts"="#ffff99"), drop = FALSE)+
   #ylim(0,1)+
   scale_y_continuous(limits=c(0,1.05),expand = c(0,0),breaks=seq(0, 1, 0.1))+
-  theme(panel.background = element_blank())+ 
+  theme(panel.background = element_blank())+ theme(text = element_text(family = "Times New Roman"))+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   labs(x="",y="")+
   theme(legend.position="none",axis.text.x = element_text(angle = 70, hjust = 1))+
   scale_x_discrete(limits=c("Random_link","bleach","LT_BL","LT_HL","LT_SL","Random_node","Tolerance_low","Degree_low","Degree_high"),labels=c("Random_link"="Random","bleach"="Bleaching","Tolerance_low"="Susceptible","Tolerance_high"="High Tolerance","Degree_high"= "High Degree","Degree_low"="Low Degree","Random_node"="Random Node","LT_BH"="High Avg. Link Tolerance","LT_BL"="Susceptible","LT_HH"="High Host Link Tolerance","LT_HL"="Host Susceptible","LT_SH"="High Symbiont Link Tolerance","LT_SL"="Symbiont Susceptible"))+
-  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=1)+theme(axis.title.x = element_text(size = 6),axis.text.x = element_text(size = 4),axis.title.y = element_text(size = 6),axis.text.y=element_text(size=4))
 
 Carib_tot<-data2%>%
   filter(network=="C",removed!="hosts",removed!="symbionts",R50_who=="both")
@@ -182,16 +167,12 @@ c_total<-Carib+
   scale_fill_manual(values=c("links" = "#7fc97f", "both" = "#99d8c9", "hosts" = "#a6cee3","symbionts"="#ffff99"), drop = FALSE)+
   #ylim(0,1)+
   scale_y_continuous(limits=c(0,1.05),expand = c(0,0),breaks=seq(0, 1, 0.1))+
-  theme(panel.background = element_blank())+ 
+  theme(panel.background = element_blank())+ theme(text = element_text(family = "Times New Roman"))+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   labs(x="",y="")+
   theme(legend.position="none",axis.text.x = element_text(angle = 70, hjust = 1))+
   scale_x_discrete(limits=c("Random_link","bleach","LT_BL","LT_HL","LT_SL","Random_node","Tolerance_low","Degree_low","Degree_high"),labels=c("Random_link"="Random","bleach"="Bleaching","Tolerance_low"="Susceptible","Tolerance_high"="High Tolerance","Degree_high"= "High Degree","Degree_low"="Low Degree","Random_node"="Random Node","LT_BH"="High Avg. Link Tolerance","LT_BL"="Susceptible","LT_HH"="High Host Link Tolerance","LT_HL"="Host Susceptible","LT_SH"="High Symbiont Link Tolerance","LT_SL"="Symbiont Susceptible"))+
-  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=1)+theme(axis.title.x = element_text(size = 6),axis.text.x = element_text(size = 4),axis.title.y = element_text(size = 6),axis.text.y=element_text(size=4))
 
 Ind_tot<-data2%>%
   filter(network=="I",removed!="hosts",removed!="symbionts",R50_who=="both")
@@ -204,20 +185,16 @@ i_total<-Ind+
   scale_fill_manual(values=c("links" = "#7fc97f", "both" = "#99d8c9", "hosts" = "#a6cee3","symbionts"="#ffff99"), drop = FALSE)+
   #ylim(0,1)+
   scale_y_continuous(limits=c(0,1.05),expand = c(0,0),breaks=seq(0, 1, 0.1))+
-  theme(panel.background = element_blank())+ 
+  theme(panel.background = element_blank())+ theme(text = element_text(family = "Times New Roman"))+
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
   labs(x="",y="")+
   theme(legend.position="none",axis.text.x = element_text(angle = 70, hjust = 1))+
   scale_x_discrete(limits=c("Random_link","bleach","LT_BL","LT_HL","LT_SL","Random_node","Tolerance_low","Degree_low","Degree_high"),labels=c("Random_link"="Random","bleach"="Bleaching","Tolerance_low"="Susceptible","Tolerance_high"="High Tolerance","Degree_high"= "High Degree","Degree_low"="Low Degree","Random_node"="Random Node","LT_BH"="High Avg. Link Tolerance","LT_BL"="Susceptible","LT_HH"="High Host Link Tolerance","LT_HL"="Host Susceptible","LT_SH"="High Symbiont Link Tolerance","LT_SL"="Symbiont Susceptible"))+
-  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=1)+theme(axis.title.x = element_text(size = 6),axis.text.x = element_text(size = 4),axis.title.y = element_text(size = 6),axis.text.y=element_text(size=4))
 
 #Put them all in one plot
-ggarrange(g_total,p_total,i_total,c_total, ncol=4, nrow=1, common.legend = FALSE, legend=NULL)
-ggsave("figure4etof.jpg", plot = last_plot(), device = NULL, path = NULL,scale = 1, width = NA, height = NA, units = c("in"),dpi = 600)
+ggarrange(g_total,p_total,i_total,c_total, ncol=4, nrow=1, labels=c("E","F","G","H"), hjust=-1,font.label=list(size = 4, face = "plain"),common.legend = FALSE, legend=NULL,widths=c(1,1,1,1))
+#ggsave("figure4etof_v25.jpg", plot = last_plot(), device = NULL, path = NULL, width = 4, height = 2, units = c("in"),dpi = 600)
 ```
 
 The following code chunk is used to make Appendix S2, Figure S1 D-F.
@@ -690,6 +667,7 @@ allthedata(0,1,sims.low,sims.middle,sims.high,net_A,net_B,net_C,net_D)
 
 Figure 4, now without the degree removal models
 ```{r}
+theme_set(theme_grey(base_size = 6))
 #,fig.height=2,fig.width=4.5}
 robustness<-read.csv("Robustness.csv") #results of robustness analyses, see metadata 2 for more info
 summary(robustness)
@@ -705,21 +683,17 @@ Global_tot$removed<-factor(Global_tot$removed,levels=c("links"="links","nodes"="
   
 global<-ggplot( Global_tot, aes(x=as.factor(model), y=mean,fill=removed))
 g_total<-global+
-  geom_bar(position=position_dodge(),stat="identity",colour='black',mapping=aes(col="red")) +
+  geom_bar(position=position_dodge(),stat="identity",colour='black',mapping=aes(col="red"),size=0.3) +
   geom_errorbar(aes(ymin=mean-std, ymax=mean+std), width=.2,position=position_dodge(.9))+
   scale_fill_manual(values=c("links" = "#7fc97f", "both" = "#99d8c9", "hosts" = "#a6cee3","symbionts"="#ffff99"), drop = FALSE)+
   #ylim(0,1)+
   scale_y_continuous(limits=c(0,1.05),expand = c(0,0),breaks=seq(0, 1, 0.1))+
   theme(panel.background = element_blank())+ 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  labs(x="",y="Robustness, R50")+
+  labs(x="",y="Robustness, R50",size=5)+theme(text = element_text(family = "Times New Roman"))+
   theme(legend.position="none",axis.text.x = element_text(angle = 70, hjust = 1))+
   scale_x_discrete(limits=c("Random_link","bleach","LT_BL","LT_HL","LT_SL","Random_node","Tolerance_low"),labels=c("Random_link"="Random","bleach"="Bleaching","Tolerance_low"="Susceptible","Tolerance_high"="High Tolerance","Degree_high"= "High Degree","Degree_low"="Low Degree","Random_node"="Random Node","LT_BH"="High Avg. Link Tolerance","LT_BL"="Susceptible","LT_HH"="High Host Link Tolerance","LT_HL"="Host Susceptible","LT_SH"="High Symbiont Link Tolerance","LT_SL"="Symbiont Susceptible"))+
-  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=1)+theme(axis.title.x = element_text(size = 6),axis.text.x = element_text(size = 4),axis.title.y = element_text(size = 4),axis.text.y=element_text(size=5))
 
 Pacific_tot<-data2%>%
   filter(network=="P",removed!="hosts",removed!="symbionts",R50_who=="both")
@@ -727,21 +701,18 @@ Pacific_tot$removed<-factor(Pacific_tot$removed,levels=c("links"="links","nodes"
   
 Pacific<-ggplot( Pacific_tot, aes(x=as.factor(model), y=mean,fill=removed))
 p_total<-Pacific+
-  geom_bar(position=position_dodge(),stat="identity",colour='black',mapping=aes(col="red")) +
+  geom_bar(position=position_dodge(),size=0.3,stat="identity",colour='black',mapping=aes(col="red")) +
   geom_errorbar(aes(ymin=mean-std, ymax=mean+std), width=.2,position=position_dodge(.9))+
   scale_fill_manual(values=c("links" = "#7fc97f", "both" = "#99d8c9", "hosts" = "#a6cee3","symbionts"="#ffff99"), drop = FALSE)+
   #ylim(0,1)+
   scale_y_continuous(limits=c(0,1.05),expand = c(0,0),breaks=seq(0, 1, 0.1))+
   theme(panel.background = element_blank())+ 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  labs(x="",y="")+
+  labs(x="",y="")+theme(text = element_text(family = "Times New Roman"))+
   theme(legend.position="none",axis.text.x = element_text(angle = 70, hjust = 1))+
   scale_x_discrete(limits=c("Random_link","bleach","LT_BL","LT_HL","LT_SL","Random_node","Tolerance_low"),labels=c("Random_link"="Random","bleach"="Bleaching","Tolerance_low"="Susceptible","Tolerance_high"="High Tolerance","Degree_high"= "High Degree","Degree_low"="Low Degree","Random_node"="Random Node","LT_BH"="High Avg. Link Tolerance","LT_BL"="Susceptible","LT_HH"="High Host Link Tolerance","LT_HL"="Host Susceptible","LT_SH"="High Symbiont Link Tolerance","LT_SL"="Symbiont Susceptible"))+
-  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=1)+theme(axis.title.x = element_text(size = 6),axis.text.x = element_text(size = 4),axis.title.y = element_text(size = 6),axis.text.y=element_text(size=4))
+
 
 Carib_tot<-data2%>%
   filter(network=="C",removed!="hosts",removed!="symbionts",R50_who=="both")
@@ -749,21 +720,18 @@ Carib_tot$removed<-factor(Carib_tot$removed,levels=c("links"="links","nodes"="bo
 
 Carib<-ggplot( Carib_tot, aes(x=as.factor(model), y=mean,fill=removed))
 c_total<-Carib+
-  geom_bar(position=position_dodge(),stat="identity",colour='black',mapping=aes(col="red")) +
+  geom_bar(position=position_dodge(),size=0.3,stat="identity",colour='black',mapping=aes(col="red")) +
   geom_errorbar(aes(ymin=mean-std, ymax=mean+std), width=.2,position=position_dodge(.9))+
   scale_fill_manual(values=c("links" = "#7fc97f", "both" = "#99d8c9", "hosts" = "#a6cee3","symbionts"="#ffff99"), drop = FALSE)+
   #ylim(0,1)+
   scale_y_continuous(limits=c(0,1.05),expand = c(0,0),breaks=seq(0, 1, 0.1))+
   theme(panel.background = element_blank())+ 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  labs(x="",y="")+
+  labs(x="",y="")+theme(text = element_text(family = "Times New Roman"))+
   theme(legend.position="none",axis.text.x = element_text(angle = 70, hjust = 1))+
   scale_x_discrete(limits=c("Random_link","bleach","LT_BL","LT_HL","LT_SL","Random_node","Tolerance_low"),labels=c("Random_link"="Random","bleach"="Bleaching","Tolerance_low"="Susceptible","Tolerance_high"="High Tolerance","Degree_high"= "High Degree","Degree_low"="Low Degree","Random_node"="Random Node","LT_BH"="High Avg. Link Tolerance","LT_BL"="Susceptible","LT_HH"="High Host Link Tolerance","LT_HL"="Host Susceptible","LT_SH"="High Symbiont Link Tolerance","LT_SL"="Symbiont Susceptible"))+
-  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=1)+theme(axis.title.x = element_text(size = 6),axis.text.x = element_text(size = 4),axis.title.y = element_text(size = 6),axis.text.y=element_text(size=4))
+
 
 Ind_tot<-data2%>%
   filter(network=="I",removed!="hosts",removed!="symbionts",R50_who=="both")
@@ -771,25 +739,66 @@ Ind_tot$removed<-factor(Carib_tot$removed,levels=c("links"="links","nodes"="both
 
 Ind<-ggplot( Ind_tot, aes(x=as.factor(model), y=mean,fill=removed))
 i_total<-Ind+
-  geom_bar(position=position_dodge(),stat="identity",colour='black',mapping=aes(col="red")) +
+  geom_bar(position=position_dodge(),size=0.3,stat="identity",colour='black',mapping=aes(col="red")) +
   geom_errorbar(aes(ymin=mean-std, ymax=mean+std), width=.2,position=position_dodge(.9))+
   scale_fill_manual(values=c("links" = "#7fc97f", "both" = "#99d8c9", "hosts" = "#a6cee3","symbionts"="#ffff99"), drop = FALSE)+
   #ylim(0,1)+
   scale_y_continuous(limits=c(0,1.05),expand = c(0,0),breaks=seq(0, 1, 0.1))+
   theme(panel.background = element_blank())+ 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(), axis.line = element_line(colour = "black"))+
-  labs(x="",y="")+
+  labs(x="",y="")+theme(text = element_text(family = "Times New Roman"))+
   theme(legend.position="none",axis.text.x = element_text(angle = 70, hjust = 1))+
   scale_x_discrete(limits=c("Random_link","bleach","LT_BL","LT_HL","LT_SL","Random_node","Tolerance_low"),labels=c("Random_link"="Random","bleach"="Bleaching","Tolerance_low"="Susceptible","Tolerance_high"="High Tolerance","Degree_high"= "High Degree","Degree_low"="Low Degree","Random_node"="Random Node","LT_BH"="High Avg. Link Tolerance","LT_BL"="Susceptible","LT_HH"="High Host Link Tolerance","LT_HL"="Host Susceptible","LT_SH"="High Symbiont Link Tolerance","LT_SL"="Symbiont Susceptible"))+
-  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=8)+theme(
-  axis.title.x = element_text(size = 24),
-  axis.text.x = element_text(size = 20),
-  axis.title.y = element_text(size = 24),
-  axis.text.y=element_text(size=20))
+  geom_text(aes( label=statlab,y=mean+std+0.05),position = position_dodge(0.9),vjust = 0,size=1)+theme(axis.title.x = element_text(size = 6),axis.text.x = element_text(size = 4),axis.title.y = element_text(size = 6),axis.text.y=element_text(size=4))
+
 
 #Put them all in one plot
-ggarrange(g_total,p_total,i_total,c_total, ncol=4, nrow=1, common.legend = FALSE, legend=NULL)
-ggsave("figure4etof.jpg", plot = last_plot(), device = NULL, path = NULL,scale = 1, width = NA, height = NA, units = c("in"),dpi = 600)
+ggarrange(g_total,p_total,i_total,c_total, ncol=4, nrow=1, labels=c("e","f","g","h"), hjust=-1,font.label=list(size = 4, face = "plain",family="Times New Roman"),common.legend = FALSE, legend=NULL)
+#ggsave("figure4etof_v50.jpg", plot = last_plot(), device = NULL, path = NULL, width = 4, height = 2, units = c("in"),dpi = 600)
+
 ```
 
+```{r}
+tols<-read.csv("tolerances_all.csv",header=T)
+g <- ggplot(tols, aes(tolerance))
+g + geom_histogram(aes(fill=factor(type)), alpha=0.5,binwidth=0.05,position="identity") + 
+  labs(
+       x="Thermal tolerance rank",
+       y="Count",
+       fill="Node Type")+
+  scale_fill_manual(values=c("deepskyblue2","gold1"))+
+  theme(panel.background = element_blank())+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  theme(legend.position="bottom",legend.text=element_text(size=4),legend.title=element_blank())+
+  theme(axis.title.x = element_text(size = 5),axis.text.x = element_text(size = 4),axis.title.y = element_text(size = 5),axis.text.y=element_text(size=4))+theme(text = element_text(family = "Times New Roman"))+theme(legend.key.size =unit(0.2,"line"))
+#ggsave("figure1c_v35.jpg", plot = last_plot(), device = NULL, path = NULL, width = 1.5, height = 1.2, units = c("in"),dpi = 600)
+
+```
+
+```{r}
+losers<-read.csv('alwaystop100bleached.csv')
+summary(losers)
+theme_set(theme_classic())
+theme_set(theme_grey(base_size = 18)) 
+require(forcats)
+losers2<-losers%>%
+  filter(Host_Family!='Pectiniidae',Host_Family!='Oculinidae',Host_Family!='Merulinidae',Host_Family!='Caryophylliidae', Host_Family!='Dendrophylliidae' )
+theme_set(theme_grey(base_size = 12)) 
+
+ggplot(losers2, aes(fct_infreq(Host_Family))) + 
+  geom_bar(aes(fill=Region))+
+  theme(panel.background = element_blank())+ 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(colour = "black"))+
+  theme(axis.text.x = element_text(angle=70, hjust=1,face="italic"))+
+  labs(x="Host family",y=("Occurrences in set of hosts that \n are always in first 100 bleached"))+
+  scale_y_continuous(breaks=seq(0,28,2),expand = c(0, 0))+
+  scale_fill_manual(values=c('#d73027','#f46d43','#fdae61',
+                             '#fee090','#91bfdb','#4575b4'))+
+  theme(axis.title.x = element_text(size = 5),axis.text.x = element_text(size = 4),axis.title.y = element_text(size = 5),axis.text.y=element_text(size=4))+theme(text = element_text(family = "Times New Roman"))+
+  theme(legend.position = c(0.9, 0.7) ,legend.text=element_text(size=3),legend.title=element_blank(),legend.key.size =unit(0.5,"line"))
+#ggsave("figure5_v20.jpg", plot = last_plot(), device = NULL, path = NULL, width = 3, height = 3, units = c("in"),dpi = 600)
+
+```
 

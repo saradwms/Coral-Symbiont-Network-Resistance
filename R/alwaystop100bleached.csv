@@ -1,0 +1,80 @@
+﻿ID,degree,Host_Family,Host_Genus,Host_Sci_Name,Ocean,Region,T_MMM_05,host_tol
+5,1,Acroporidae,Acropora,Acropora abrolhosensis,Pacific,Japan,28.53889,0.6448
+9,1,Acroporidae,Acropora,Acropora aspera,Pacific,Japan,28.53889,0.5925
+14,1,Acroporidae,Acropora,Acropora cerealis,Pacific,Japan,28.53889,0.5137
+22,1,Acroporidae,Acropora,Acropora copiosa,Pacific,Japan,28.53889,0.6749
+24,13,Acroporidae,Acropora,Acropora cytherea,Pacific,Central Pacific,27.6,0.5752
+26,1,Acroporidae,Acropora,Acropora cytherea,Pacific,GBR,27.6,0.5752
+31,1,Acroporidae,Acropora,Acropora digitifera,Pacific,Japan,28.53889,0.6816
+35,2,Acroporidae,Acropora,Acropora donei,Pacific,Japan,28.53889,0.6729
+37,1,Acroporidae,Acropora,Acropora exquisita,Pacific,Japan,28.53889,0.5445
+41,1,Acroporidae,Acropora,Acropora florida,Pacific,Japan,28.53889,0.5431
+43,1,Acroporidae,Acropora,Acropora formosa,Pacific,GBR,27.6,0.5073
+44,2,Acroporidae,Acropora,Acropora gemmifera,Pacific,GBR,27.6,0.2893
+52,3,Acroporidae,Acropora,Acropora humilis,Pacific,GBR,27.6,0.4886
+71,10,Acroporidae,Acropora,Acropora nasuta,Pacific,Central Pacific,27.6,0.4106
+72,3,Acroporidae,Acropora,Acropora nasuta,Pacific,GBR,27.62593,0.4106
+75,2,Acroporidae,Acropora,Acropora nobilis,Pacific,Japan,28.53889,0.6576
+77,1,Acroporidae,Acropora,Acropora palifera,Pacific,Japan,28.53889,0.4783
+79,3,Acroporidae,Acropora,Acropora palifera,Pacific,GBR,27.62593,0.4783
+86,1,Acroporidae,Acropora,Acropora polystoma,Pacific,GBR,27.62593,0.5993
+107,1,Acroporidae,Acropora,Acropora subglabra,Pacific,Japan,28.53889,0.6425
+114,1,Acroporidae,Acropora,Acropora tenuis,Pacific,Japan,28.53889,0.6215
+120,1,Acroporidae,Acropora,Acropora verweyi,Pacific,Japan,28.53889,0.5879
+146,1,Faviidae,Caulastrea,Caulastrea chalcidicum,Pacific,Japan,28.53889,0.6448
+167,1,Siderastreidae,Coscinaraea,Coscinaraea wellsi,Pacific,Central Pacific,28.6825,0.6848
+170,2,Fungiidae,Cycloseris,Cycloseris vaughani,Pacific,Central Pacific,28.6825,0.6728
+177,3,Faviidae,Cyphastrea,Cyphastrea ocellina,Pacific,Central Pacific,28.6825,0.945
+179,2,Faviidae,Cyphastrea,Cyphastrea sp.,Pacific,Central Pacific,27.6,0.7825
+251,1,Faviidae,Favia,Favia pallida,Pacific,GBR,28.6825,0.6016
+292,2,Fungiidae,Fungia,Fungia sp.,Pacific,Central Pacific,27.6,0.8825
+297,1,Oculinidae,Galaxea,Galaxea astreata,Pacific,GBR,28.6825,0.5241
+317,1,Faviidae,Goniastrea,Goniastrea edwardsi,Pacific,GBR,28.6825,0.4309
+325,1,Faviidae,Goniastrea,Goniastrea retiformis,Pacific,GBR,28.6825,0.4315
+335,1,Poritidae,Goniopora,Goniopora tenuidens,Pacific,GBR,28.6825,0.6071
+338,1,Fungiidae,Herpolitha,Herpolitha weberi,Pacific,GBR,28.6825,0.4979
+352,2,Faviidae,Leptastrea,Leptastrea bottae,Pacific,Central Pacific,28.6825,0.793
+357,2,Faviidae,Leptastrea,Leptastrea purpurea,Pacific,Central Pacific,28.6825,0.8427
+365,1,Agariciidae,Leptoseris,Leptoseris incrustans,Pacific,Central Pacific,28.6825,0.9124
+368,6,Agariciidae,Leptoseris,Leptoseris sp,Pacific,Central Pacific,28.6825,0.7852
+403,3,Merulinidae,Merulina,Merulina ampliata,Pacific,GBR,28.6825,0.4136
+442,1,Acroporidae,Montipora,Montipora danae,Pacific,Japan,28.53889,0.2735
+449,3,Acroporidae,Montipora,Montipora flabellata,Pacific,Central Pacific,28.6825,0.615
+453,2,Acroporidae,Montipora,Montipora mollis,Indian,Western Australia,28.77619,0.4754
+459,4,Acroporidae,Montipora,Montipora patula,Pacific,Central Pacific,28.6825,0.8625
+513,2,Agariciidae,Pavona,Pavona clavus,Pacific,Eastern Pacific,27.6,0.685
+515,1,Agariciidae,Pavona,Pavona duerdeni,Pacific,GBR,28.6825,0.524
+516,1,Agariciidae,Pavona,Pavona duerdeni,Pacific,Central Pacific,28.6825,0.524
+521,2,Agariciidae,Pavona,Pavona gigantea,Pacific,Eastern Pacific,27.6,0.6314
+528,9,Agariciidae,Pavona,Pavona varians,Pacific,Central Pacific,28.6825,0.7615
+534,2,Pectiniidae,Pectinia,Pectinia lactuca,Pacific,GBR,28.6825,0.3119
+555,1,Caryophylliidae,Plerogyra,Plerogyra sinuosa,Pacific,GBR,28.6825,0.285
+561,4,Pocilloporidae,Pocillopora,Pocillopora capitata,Pacific,Eastern Pacific,27.6,0.6485
+568,19,Pocilloporidae,Pocillopora,Pocillopora damicornis,Pacific,Central Pacific,28.6825,0.5771
+573,5,Pocilloporidae,Pocillopora,Pocillopora damicornis,Pacific,Eastern Pacific,28.53889,0.5771
+580,7,Pocilloporidae,Pocillopora,Pocillopora eydouxi,Pacific,Central Pacific,28.6825,0.7815
+582,2,Pocilloporidae,Pocillopora,Pocillopora ligulata,Pacific,Central Pacific,28.6825,0.6165
+585,4,Pocilloporidae,Pocillopora,Pocillopora meandrina,Pacific,Eastern Pacific,27.6,0.6723
+587,6,Pocilloporidae,Pocillopora,Pocillopora meandrina,Pacific,Central Pacific,28.6825,0.6723
+588,1,Pocilloporidae,Pocillopora,Pocillopora molokensis,Pacific,Central Pacific,28.6825,0.463
+590,6,Pocilloporidae,Pocillopora,Pocillopora sp.,Pacific,Eastern Pacific,27.6,0.6463
+594,4,Pocilloporidae,Pocillopora,Pocillopora verrucosa,Pacific,Eastern Pacific,27.6,0.7418
+608,1,Poritidae,Porites,Porites brighami,Pacific,Central Pacific,28.6825,0.8251
+610,5,Poritidae,Porites,Porites compressa,Pacific,Central Pacific,28.6825,0.6631
+627,5,Poritidae,Porites,Porites lobata,Pacific,Central Pacific,28.6825,0.6421
+630,5,Poritidae,Porites,Porites lutea,Pacific,Central Pacific,28.6825,0.7542
+632,1,Poritidae,Porites,Porites lutea/evermanni,Pacific,Central Pacific,28.6825,0.945
+637,5,Poritidae,Porites,Porites panamensis,Pacific,Eastern Pacific,27.6,0.724
+651,8,Poritidae,Porites,Porites sp.,Pacific,Central Pacific,27.6,0.695
+652,1,Poritidae,Porites,Porites sp.,Pacific,Eastern Pacific,27.6,0.695
+656,2,Siderastreidae,Psammocora,Psammocora brighami,Pacific,Eastern Pacific,27.6,0.5091
+660,1,Siderastreidae,Psammocora,Psammocora digitata,Pacific,GBR,28.6825,0.5858
+665,2,Siderastreidae,Psammocora,Psammocora profundacella,Pacific,Eastern Pacific,27.6,0.5667
+666,1,Siderastreidae,Psammocora,Psammocora profundacella,Pacific,GBR,28.6825,0.5667
+668,2,Siderastreidae,Psammocora,Psammocora sp.,Pacific,Eastern Pacific,27.6,0.62
+669,3,Siderastreidae,Psammocora,Psammocora sp.,Pacific,Central Pacific,28.6825,0.62
+674,1,Mussidae,Scolymia,Scolymia australis,Pacific,GBR,28.6825,0.3125
+678,2,Mussidae,Scolymia,Scolymia sp.,Indian,Western Indian,28.9697,0.3125
+704,1,Pocilloporidae,Stylophora,Stylophora pistillata,Indian,Western Australia,28.77619,0.4358
+706,1,Pocilloporidae,Stylophora,Stylophora pistillata,Pacific,Japan,28.53889,0.4358
+729,1,Dendrophylliidae,Turbinaria,Turbinaria reniformis,Indian,Western Australia,28.77619,0.7045
