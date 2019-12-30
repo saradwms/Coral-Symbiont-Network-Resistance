@@ -7,6 +7,8 @@
 
 ## Link to article:
 
+[![DOI](https://zenodo.org/badge/157595253.svg)](https://zenodo.org/badge/latestdoi/157595253)
+
 ## Additional Supplemental Material 
 
 Code and data files needed to execute the code are re-organized and provided in this GitHub Repository. See the R and Python sub-folders.
