@@ -3,13 +3,11 @@
 
 ![Fig. 1 A) Visualization of the global coral-symbiont network. Host nodes are in blue and symbiont nodes are in yellow. Size corresponds to degree. ](Fig1A.png) 
 
-## Citation:
-
-## Link to article:
+## Link to article: https://doi.org/10.1002/ecy.2990 
 
 [![DOI](https://zenodo.org/badge/157595253.svg)](https://zenodo.org/badge/latestdoi/157595253)
 
-## Additional Supplemental Material 
+## Additional Supplemental Materials
 
 Code and data files needed to execute the code are re-organized and provided in this GitHub Repository. See the R and Python sub-folders.
 
